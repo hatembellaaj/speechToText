@@ -3,74 +3,26 @@
 <head>
   <meta charset="UTF-8" />
   <title>Speech to Text - Français</title>
-  <style>
-    body { font-family: Arial, sans-serif; text-align: center; margin-top: 50px; }
-    .container { display: flex; flex-direction: column; align-items: center; }
-    #messages { 
-      margin-top: 20px;
-      max-width: 600px;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-    .message {
-      background-color: #f1f1f1;
-      border-radius: 15px;
-      padding: 12px 18px;
-      text-align: left;
-      align-self: flex-start;
-      max-width: 80%;
-      font-size: 16px;
-      line-height: 1.4;
-    }
-  </style>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <div class="container">
     <h1>🎙️ Conversion Audio → Texte</h1>
-    <input type="file" id="audioFile" accept="audio/*" />
-    <button onclick="uploadAudio()">Transcrire</button>
+    <p class="intro">Découpez automatiquement vos fichiers audio en parcelles et suivez la transcription au fil de l'eau.</p>
+
+    <div class="uploader">
+      <label class="file-label" for="audioFile">Choisissez un fichier audio</label>
+      <input type="file" id="audioFile" accept="audio/wav,audio/x-wav,audio/mpeg,audio/mp3,audio/mp4,audio/x-m4a,audio/aac,audio/ogg,audio/flac" />
+      <p class="formats">Formats autorisés : WAV, MP3, M4A, AAC, OGG, FLAC.</p>
+      <button onclick="uploadAudio()">Transcrire</button>
+    </div>
+
+    <div id="status" class="status">Aucun traitement en cours.</div>
 
     <h2>Résultat :</h2>
-    <div id="messages"></div>
+    <div id="messages" class="messages"></div>
   </div>
 
-  <script>
-    async function uploadAudio() {
-      const file = document.getElementById('audioFile').files[0];
-      if (!file) {
-        alert("Choisissez un fichier audio !");
-        return;
-      }
-
-      const formData = new FormData();
-      formData.append("audio", file);
-
-      const messagesDiv = document.getElementById("messages");
-      messagesDiv.innerHTML = `<div class="message">⏳ Transcription en cours...</div>`;
-
-      try {
-        const response = await fetch("http://127.0.0.1:5020/transcribe", {
-          method: "POST",
-          body: formData
-        });
-
-        if (!response.ok) throw new Error("Erreur serveur");
-        const data = await response.json();
-
-        messagesDiv.innerHTML = ""; // Vide l’indicateur précédent
-
-        // 🗨️ Affiche le texte sous forme de bulle
-        const message = document.createElement("div");
-        message.className = "message";
-        message.textContent = data.text || "Aucun texte détecté.";
-        messagesDiv.appendChild(message);
-
-      } catch (error) {
-        messagesDiv.innerHTML = `<div class="message">❌ Erreur de connexion avec le serveur.</div>`;
-        console.error(error);
-      }
-    }
-  </script>
+  <script src="script.js"></script>
 </body>
 </html>

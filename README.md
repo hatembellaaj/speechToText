@@ -13,8 +13,10 @@ Elle utilise le modèle **Whisper** (open-source, d’OpenAI) et tourne entière
 - 🔐 **Aucune donnée envoyée en ligne** — tout reste sur votre machine
 - 🌐 Interface web claire et minimaliste
 - ⚙️ Architecture **séparée frontend/backend**
-  - Backend Flask → port `5020`
-  - Frontend Nginx → port `8020`
+  - Backend Flask → port `5610`
+  - Frontend Nginx → port `8787`
+- ⏱️ Découpage automatique en parcelles avec affichage progressif des transcriptions
+- 📂 Indication claire des formats audio supportés (WAV, MP3, M4A, AAC, OGG, FLAC)
 
 ---
 
@@ -57,14 +59,14 @@ docker-compose up --build
 
 ### 3️⃣ Accéder à l’interface
 
-- **Frontend (page web)** → [http://127.0.0.1:8020](http://127.0.0.1:8020)  
-- **Backend API (Flask)** → [http://127.0.0.1:5020/transcribe](http://127.0.0.1:5020/transcribe)
+- **Frontend (page web)** → [http://127.0.0.1:8787](http://127.0.0.1:8787)
+- **Backend API (Flask)** → [http://127.0.0.1:5610/transcribe](http://127.0.0.1:5610/transcribe)
 
 ---
 
 ## 🧠 Utilisation
 
-1. Ouvrez [http://127.0.0.1:8020](http://127.0.0.1:8020)
+1. Ouvrez [http://127.0.0.1:8787](http://127.0.0.1:8787)
 2. Chargez un fichier audio (`.mp3`, `.wav`, `.mp4`, etc.)
 3. Cliquez sur **Transcrire**
 4. L’application affiche le texte reconnu sous forme de message 💬
@@ -87,8 +89,8 @@ docker-compose up --build
 
 | Service | Port local | Description |
 |----------|-------------|-------------|
-| Flask Backend | `5020` | API `/transcribe` |
-| Nginx Frontend | `8020` | Interface web utilisateur |
+| Flask Backend | `5610` | API `/transcribe` |
+| Nginx Frontend | `8787` | Interface web utilisateur |
 
 ---
 
